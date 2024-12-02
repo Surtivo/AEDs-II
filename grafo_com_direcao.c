@@ -1,3 +1,4 @@
+// Matriz de adjacencia
 #include <stdio.h>
 
 void imprimir(int n, int grafo[][n])
@@ -12,7 +13,7 @@ void imprimir(int n, int grafo[][n])
     }
 }
 
-int grau(int n, int grafo[][n], int v)
+int grau_saida(int n, int grafo[][n], int v)
 {
     int count = 0;
     for (int i = 0; i < n; i++)
@@ -25,20 +26,41 @@ int grau(int n, int grafo[][n], int v)
     return count;
 }
 
-void grau_total(int n, int grafo[][n])
+int grau_entrada(int n, int grafo[][n], int v)
+{
+    int count = 0;
+    for (int i = 0; i < n; i++)
+    {
+        if (grafo[i][v] > 0)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
+void grau_total_saida(int n, int grafo[][n])
 {
     for (int i = 0; i < n; i++)
     {
-        printf("GRAU %d: %d\n", i + 1, grau(n, grafo, i));
+        printf("GRAU SAIDA %d: %d\n", i + 1, grau_saida(n, grafo, i));
     }
 }
 
-int grau_maximo(int n, int grafo[][n])
+void grau_total_entrada(int n, int grafo[][n])
+{
+    for (int i = 0; i < n; i++)
+    {
+        printf("GRAU ENTRADA %d: %d\n", i + 1, grau_entrada(n, grafo, i));
+    }
+}
+
+int grau_maximo_entrada(int n, int grafo[][n])
 {
     int max = 0;
     for (int i = 0; i < n; i++)
     {
-        int tmp_grau = grau(n, grafo, i);
+        int tmp_grau = grau_entrada(n, grafo, i);
         if (tmp_grau > max)
         {
             max = tmp_grau;
@@ -46,12 +68,39 @@ int grau_maximo(int n, int grafo[][n])
     }
     return max;
 }
-int grau_minimo(int n, int grafo[][n])
+int grau_maximo_saida(int n, int grafo[][n])
 {
-    int min = grau(n, grafo, 0);
+    int max = 0;
+    for (int i = 0; i < n; i++)
+    {
+        int tmp_grau = grau_saida(n, grafo, i);
+        if (tmp_grau > max)
+        {
+            max = tmp_grau;
+        }
+    }
+    return max;
+}
+
+int grau_minimo_saida(int n, int grafo[][n])
+{
+    int min = grau_saida(n, grafo, 0);
     for (int i = 1; i < n; i++)
     {
-        int tmp_grau = grau(n, grafo, i);
+        int tmp_grau = grau_saida(n, grafo, i);
+        if (tmp_grau < min)
+        {
+            min = tmp_grau;
+        }
+    }
+    return min;
+}
+int grau_minimo_entrada(int n, int grafo[][n])
+{
+    int min = grau_entrada(n, grafo, 0);
+    for (int i = 1; i < n; i++)
+    {
+        int tmp_grau = grau_entrada(n, grafo, i);
         if (tmp_grau < min)
         {
             min = tmp_grau;
@@ -96,7 +145,7 @@ void isolado(int n, int grafo[][n])
     int count = 0;
     for (int i = 0; i < n; i++)
     {
-        if (grau(n, grafo, i) == 0)
+        if (grau_saida(n, grafo, i) == 0 && grau_entrada(n, grafo, i) == 0)
         {
             count++;
             printf("ISOLADO: %d\n", i + 1);
@@ -107,7 +156,7 @@ void isolado(int n, int grafo[][n])
 
 void regular(int n, int grafo[][n])
 {
-    if (grau_maximo(n, grafo) == grau_minimo(n, grafo))
+    if (grau_maximo_entrada(n, grafo) == grau_maximo_saida(n, grafo) && grau_minimo_entrada(n, grafo) == grau_minimo_saida(n, grafo) && grau_maximo_entrada(n, grafo) == grau_minimo_saida(n, grafo))
     {
         printf("É REGULAR\n");
     }
@@ -174,13 +223,31 @@ void main()
     }
     fclose(file);
 
-    printf("------------------\n");
-    grau_total(n, grafo);
-    printf("------------------\n");
-    printf("GRAU MINIMO: %d\n", grau_minimo(n, grafo));
-    printf("------------------\n");
-    printf("GRAU MAXIMO: %d\n", grau_maximo(n, grafo));
-    printf("------------------\n");
+    if (o == 0)
+    {
+        printf("------------------\n");
+        grau_total_entrada(n, grafo);
+        printf("------------------\n");
+        printf("GRAU MINIMO: %d\n", grau_minimo_entrada(n, grafo));
+        printf("------------------\n");
+        printf("GRAU MAXIMO: %d\n", grau_maximo_entrada(n, grafo));
+        printf("------------------\n");
+    }
+    else
+    {
+        printf("------------------\n");
+        grau_total_entrada(n, grafo);
+        printf("------------------\n");
+        printf("GRAU MINIMO SAIDA: %d\n", grau_minimo_saida(n, grafo));
+        printf("------------------\n");
+        printf("GRAU MINIMO ENTRADA: %d\n", grau_minimo_entrada(n, grafo));
+        printf("------------------\n");
+        printf("GRAU MAXIMO SAIDA: %d\n", grau_maximo_saida(n, grafo));
+        printf("------------------\n");
+        printf("GRAU MAXIMO ENTRADA: %d\n", grau_minimo_entrada(n, grafo));
+        printf("------------------\n");
+    }
+
     loop(n, grafo);
     printf("------------------\n");
     paralelo(n, grafo);
