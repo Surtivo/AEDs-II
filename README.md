@@ -1,4 +1,4 @@
-# AEDs_II
+# AEDs-II
 Conjunto de códigos trabalhados na disciplina Algoritmo e Estrutua de Dados II.
 Os códigos são todos implementações de algoritmos para grafos, como montagem, visualização, indentificação de certas características, etc.
 
