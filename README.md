@@ -1,5 +1,5 @@
 # AEDs-II
-Conjunto de códigos trabalhados na disciplina Algoritmo e Estrutua de Dados II.
+Conjunto de códigos trabalhados na disciplina Algoritmo e Estrutura de Dados II.
 Os códigos são todos implementações de algoritmos para grafos, como montagem, visualização, indentificação de certas características, etc.
 
 "Dicionário-AVL" se trata do primeiro trabalho para esta disciplina. Nele foi necessário criar uma estrutura de uma árvore AVL para armazenar um dicionário pt-br de plavras que seriam lidas de um arquivos.txt. Este trabalho foi feito em dupla.
